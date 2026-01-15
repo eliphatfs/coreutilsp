@@ -24,7 +24,7 @@ The default parallelism is the number of available threads, which is the number 
 
 `padu` is `pa`-rallel `du`.
 
-It is very helpful to find large directories on large file systems, and can be up to 100 times faster depending on.
+It is very helpful to find large directories on large file systems.
 
 We currently support the following flags, with exactly the same meanings of the GNU `du`:
 
