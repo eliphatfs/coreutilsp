@@ -1,4 +1,4 @@
-use std::{fs::{self, DirEntry}, io, path::{Path, PathBuf}, process::ExitCode, sync::{atomic::{AtomicBool, Ordering}, Arc, Once}};
+use std::{fs::{self, DirEntry}, io, path::PathBuf, process::ExitCode, sync::{atomic::{AtomicBool, Ordering}, Arc, Once}};
 use coreutilsp::utils::clap_ext::CommandExt;
 use coreutilsp::utils::size_unit::{parse_size, format_size};
 use clap::{CommandFactory, FromArgMatches, Parser};
