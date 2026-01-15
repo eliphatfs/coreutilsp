@@ -66,3 +66,39 @@ pub fn parse_size(input: &str) -> Result<i64, String> {
         _ => Err(format!("argument '{}' too large", input)),
     }
 }
+
+
+pub fn format_size(bytes: u64) -> String {
+    if bytes == 0 {
+        return "0".to_string();
+    }
+
+    let mut value = bytes as f64;
+    let units = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"];
+    let mut unit_idx = 0;
+
+    // If less than 1024, no suffix, no decimals
+    if value < 1024.0 {
+        return format!("{:.0}", value);
+    }
+
+    // Scale the unit
+    // We move to the next unit if the current value is >= 1023.5 
+    // (because 1023.51 would ceil to 1024)
+    while value > 1023.0 && unit_idx < units.len() - 1 {
+        value /= 1024.0;
+        unit_idx += 1;
+    }
+
+    let result = if value <= 9.9 {
+        // du uses a "ceiling to one decimal" approach for small values
+        let ceiled = (value * 10.0).ceil() / 10.0;
+        format!("{:.1}{}", ceiled, units[unit_idx])
+    } else {
+        // For larger values, it ceils to the nearest integer
+        let ceiled = value.ceil();
+        format!("{:.0}{}", ceiled, units[unit_idx])
+    };
+
+    result
+}
