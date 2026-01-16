@@ -2,7 +2,7 @@
 
 This repository aims to implement certain GNU `coreutils` in parallel. In our tests, utilities usually run 2-100 times faster than the GNU single-thread version depending on the system. `padu` can scan 80 million files on a 300TB distributed file system in 28 minutes from a single node with 96 CPU cores.
 
-While we exploit parallelism, we also aim to keep the memory usage low. Many parallel utilities keep lots of intermediate values in memory, leading to out of memory crashes on large, possibly distributed systems, where parallelism should be most effective! We strive to keep minimal information in memory. For example, `padu` only consumes 29.4MiB RSS on the large file system we mentioned before.
+While we exploit parallelism, we also aim to keep the memory usage low. Many parallel utilities keep lots of intermediate values in memory, leading to out of memory crashes on large, possibly distributed systems, where parallelism should be most effective and valueable! We strive to keep minimal information in memory. For example, `padu` only consumes 29.4MiB RSS on the large file system we mentioned before.
 
 ## Get Started
 
