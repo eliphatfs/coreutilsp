@@ -1,6 +1,7 @@
-use std::{fs::{self, DirEntry}, io, path::PathBuf, process::ExitCode, sync::{atomic::{AtomicBool, Ordering}, Arc, Once}};
+use std::{fs, io, path::PathBuf, process::ExitCode, sync::{atomic::{AtomicBool, Ordering}, Arc, Once}};
 use coreutilsp::utils::clap_ext::CommandExt;
 use coreutilsp::utils::size_unit::{parse_size, format_size};
+use coreutilsp::utils::work_entry::WorkEntry;
 use clap::{CommandFactory, FromArgMatches, Parser};
 use rayon::iter::{IntoParallelRefIterator, ParallelBridge, ParallelIterator};
 
@@ -39,29 +40,6 @@ struct State {
 }
 
 type AppState = Arc<State>;
-
-pub trait WorkEntry {
-    fn is_dir(&self) -> io::Result<bool>;
-    fn path(&self) -> PathBuf;
-}
-
-impl WorkEntry for PathBuf {
-    fn is_dir(&self) -> io::Result<bool> {
-        Ok(self.symlink_metadata()?.is_dir())
-    }
-    fn path(&self) -> PathBuf {
-        self.clone()
-    }
-}
-
-impl WorkEntry for DirEntry {
-    fn is_dir(&self) -> io::Result<bool> {
-        Ok(self.file_type()?.is_dir())
-    }
-    fn path(&self) -> PathBuf {
-        self.path()
-    }
-}
 
 fn handle_entry_internal(state: AppState, entry: &impl WorkEntry, depth: u32) -> io::Result<(bool, u64)> {
     match entry.is_dir()? {
@@ -126,14 +104,14 @@ fn main() -> ExitCode {
         Ok(args) => args,
         Err(err) => {
             err.print().expect("failed to print cli parsing error message");
-            return ExitCode::from(1);
+            return ExitCode::FAILURE;
         }
     };
     let mut cli = match Cli::from_arg_matches_mut(&mut args) {
         Ok(args) => args,
         Err(err) => {
             err.format(&mut fmtcmd).print().expect("failed to print cli parsing error message");
-            return ExitCode::from(1);
+            return ExitCode::FAILURE;
         }
     };
 
