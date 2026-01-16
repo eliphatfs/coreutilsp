@@ -2,8 +2,8 @@ use std::{fs, io, path::PathBuf, process::ExitCode, sync::{atomic::{AtomicBool, 
 use coreutilsp::utils::clap_ext::CommandExt;
 use coreutilsp::utils::size_unit::{parse_size, format_size};
 use coreutilsp::utils::work_entry::WorkEntry;
-use clap::{CommandFactory, FromArgMatches, Parser};
-use rayon::iter::{IntoParallelRefIterator, ParallelBridge, ParallelIterator};
+use clap::{CommandFactory, Parser};
+use rayon::iter::{IntoParallelRefIterator, ParallelBridge, ParallelIterator, Either};
 
 
 #[derive(Parser, Clone, Debug)] // requires `derive` feature
@@ -98,21 +98,9 @@ fn handle_entry(state: AppState, entry: &impl WorkEntry, depth: u32) -> (bool, u
 }
 
 fn main() -> ExitCode {
-    let cli = Cli::command().help_version_long_only();
-    let mut fmtcmd = cli.clone();
-    let mut args = match cli.try_get_matches() {
-        Ok(args) => args,
-        Err(err) => {
-            err.print().expect("failed to print cli parsing error message");
-            return ExitCode::FAILURE;
-        }
-    };
-    let mut cli = match Cli::from_arg_matches_mut(&mut args) {
-        Ok(args) => args,
-        Err(err) => {
-            err.format(&mut fmtcmd).print().expect("failed to print cli parsing error message");
-            return ExitCode::FAILURE;
-        }
+    let mut cli: Cli = match Cli::command().help_version_long_only().parse() {
+        Either::Left(cli) => cli,
+        Either::Right(exit_code) => return exit_code
     };
 
     if cli.files.len() == 0 {
