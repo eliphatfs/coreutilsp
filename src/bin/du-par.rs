@@ -55,7 +55,7 @@ fn handle_entry_internal(state: AppState, entry: &impl WorkEntry, depth: u32) ->
                     Err(err) => {
                         local_error_logic.call_once(|| {
                             state.has_any_error.store(true, Ordering::Release);
-                            eprintln!("padu: cannot read directory '{}': {}", path.display(), err);
+                            eprintln!("du-par: cannot read directory '{}': {}", path.display(), err);
                         });
                         0
                     }
@@ -91,7 +91,7 @@ fn handle_entry(state: AppState, entry: &impl WorkEntry, depth: u32) -> (bool, u
         },
         Err(err) => {
             state.has_any_error.store(true, Ordering::Release);
-            eprintln!("padu: cannot access '{}': {}", entry.path().display(), err);
+            eprintln!("du-par: cannot access '{}': {}", entry.path().display(), err);
             (false, 0)  // no size is found
         }
     }
