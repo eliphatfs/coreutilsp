@@ -57,3 +57,25 @@ A difference is that `du-par` doesn't guarantee the order of the output. However
 1       ./.git/refs
 2       ./.git/objects
 ```
+
+### `rm-par`
+
+Be careful when using the utility! It removes files really fast.
+
+```
+Usage: rm-par [OPTIONS] [FILES]...
+
+Arguments:
+  [FILES]...
+
+Options:
+  -f, --force
+  -I               prompt once before removing more than three files, or
+                     when removing recursively; less intrusive than -i,
+                     while still giving protection against most mistakes
+  -r, --recursive  [aliases: -R]
+  -d, --dir
+  -v, --verbose
+      --help       Print help information
+      --version    Print version information
+```
