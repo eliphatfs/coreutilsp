@@ -1,5 +1,5 @@
 use std::path::{Component, PathBuf};
-use coreutilsp::utils::work_entry::WorkEntry;
+use coreutilsp::utils::work_entry::WorkEntryPathExt;
 
 #[test]
 fn test_dots() {
