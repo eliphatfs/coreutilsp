@@ -79,3 +79,40 @@ Options:
       --help       Print help information
       --version    Print version information
 ```
+
+### `cp-par`
+
+`cp-par` is `cp`, `par`-allelized.
+
+It copies directory trees in parallel, which is especially useful on distributed or high-IOPS file systems where single-threaded `cp -R` cannot saturate the available bandwidth.
+
+```
+Usage: cp-par [OPTIONS] [FILES]...
+
+Arguments:
+  [FILES]...
+
+Options:
+  -R, --recursive    [aliases: -r]
+  -f, --force
+  -i, --interactive
+  -p
+  -P
+  -H
+  -L
+  -v, --verbose
+      --help         Print help information
+      --version      Print version information
+```
+
+Flags have the same meanings as GNU `cp`:
+
+- `-R` — copy directories recursively, parallelizing across entries
+- `-p` — preserve timestamps, permissions, and ownership
+- `-P` — never follow symbolic links in source (default with `-R`)
+- `-H` — follow symbolic links given as arguments only (with `-R`)
+- `-L` — follow all symbolic links (with `-R`)
+- `-f` — force: unlink destination and retry if it cannot be opened for writing
+- `-i` — interactive: prompt before overwriting existing files
+
+Like the other utilities, `cp-par` does not guarantee the order of operations within a directory, but it does guarantee that a parent directory is created before its contents are copied.
