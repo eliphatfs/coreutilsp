@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Parallel implementations of GNU coreutils in Rust. Binaries: `du-par` (parallel du) and `rm-par` (parallel rm). Uses rayon/crossbeam for parallelism with minimal memory footprint.
+Parallel implementations of GNU coreutils in Rust. Binaries: `du-par` (parallel du), `rm-par` (parallel rm), and `cp-par` (parallel cp). Uses rayon/crossbeam for parallelism with minimal memory footprint. Cross-platform is a goal — prefer std APIs over libc, use `#[cfg(unix)]`/`#[cfg(windows)]` where needed.
 
 ## Build & Test Commands
 
@@ -21,6 +21,7 @@ Control parallelism via `RAYON_NUM_THREADS` env var.
 
 - `src/bin/du-par.rs` — parallel `du` binary
 - `src/bin/rm-par.rs` — parallel `rm` binary
+- `src/bin/cp-par.rs` — parallel `cp` binary
 - `src/utils/` — shared utilities:
   - `work_entry.rs` — work queue entry abstraction
   - `size_unit.rs` — size parsing/formatting (human-readable, thresholds)
