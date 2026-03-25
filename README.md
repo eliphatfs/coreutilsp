@@ -6,11 +6,23 @@ While we exploit parallelism, we also aim to keep the memory usage low. Many par
 
 ## Get Started
 
+Install from [crates.io](https://crates.io/crates/coreutilsp):
+
 ```bash
+cargo install coreutilsp
+```
+
+This builds and installs `du-par`, `rm-par`, and `cp-par` into `~/.cargo/bin/`.
+
+### Building from source
+
+```bash
+git clone https://github.com/eliphatfs/coreutilsp.git
+cd coreutilsp
 cargo build -r
 ```
 
-You will usually find the binaries in `./target/release`.
+Binaries will be in `./target/release`.
 
 ## FAQ
 
