@@ -2,6 +2,11 @@
 name = "coreutilsp"
 version = "0.1.0"
 edition = "2024"
+description = "Parallel implementations of GNU coreutils (du, rm, cp) for high-performance file systems"
+license = "Apache-2.0"
+repository = "https://github.com/eliphatfs/coreutilsp"
+keywords = ["coreutils", "parallel", "du", "rm", "cp"]
+categories = ["command-line-utilities", "filesystem"]
 
 [dependencies]
 anyhow = "1.0"
